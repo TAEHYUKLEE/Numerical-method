@@ -49,7 +49,7 @@ int main(void) {
 	//Cubic spline function, Pointer must be used for localization of Cubic spline functino, do it later
 	
 	////////////////////////////////////////  Formation of Tri Diagonal Matrix  /////////////////////////////////////////////
-	for (i = 0; i < n-1; i++) { //2ÇàºÎÅÍ a,b,c,y2
+	for (i = 0; i < n-1; i++) { //2Ã‡Ã ÂºÃŽÃ…Ã a,b,c,y2
 
 		for (j = 0; j < n-1; j++) {
 
