@@ -14,7 +14,7 @@ int main(void)
 	FILE* pfo;
 		fopen_s(&pfo, s_output, "w");
 
-	double func(double V); //¿øÇü ÇÔ¼ö ¼±¾ğ
+	double func(double V); //ì›í˜• í•¨ìˆ˜ ì„ ì–¸
 
 	int n, i;
 	double  fx, fx_1, fx_2, fx_3, fsx, fsx_1, fsx_2, fsx_3, t0, tn = 0;
@@ -33,7 +33,7 @@ int main(void)
 	delt = 0.001;
 	n = (tn - t0) / delt;  
 							  
-	//ÃÊ±â°ª ¼³Á¤ 
+	//ì´ˆê¸°ê°’ ì„¤ì • 
 	x[0] = 0.0;
 	y[0] = 0.0;
 	z[0] = 1.7; //h: 1.7m
@@ -64,7 +64,7 @@ int main(void)
 		fz = vz[i];
 		fsz = -g -func(V) * V * vz[i] + B * w * (vx[i] * sin(pi));
 
-		//step1 (Initial ConditionÀ¸·Î) (k1ÀÇ half stepÀ¸·Î Á¡ Âï±â)
+		//step1 (Initial Conditionìœ¼ë¡œ) (k1ì˜ half stepìœ¼ë¡œ ì  ì°ê¸°)
 		h_X = x[i] + delt / (2.0) * fx; //half step x
 		h_Vx = v[i] + delt / (2.0) * fsx; //half step vx
 		h_Y = x[i] + delt / (2.0) * fy; //half step y
@@ -72,28 +72,28 @@ int main(void)
 		h_Z = x[i] + delt / (2.0) * fz; //half step z
 		h_Vz = v[i] + delt / (2.0) * fsz; //half step vz
 
-		//Áß°£¿¡ V_h¸¦ ±¸ÇØÁà¾ßÇÔ
+		//ì¤‘ê°„ì— V_hë¥¼ êµ¬í•´ì¤˜ì•¼í•¨
 		V_h = sqrt(pow(h_Vx, 2) + pow(h_Vy, 2) + pow(h_Vz, 2));
 
-		fx_1 = (h_X * cos(theta)); // need half step t, x, v(vµµ x,y,z: half step)
+		fx_1 = (h_X * cos(theta)); // need half step t, x, v(vë„ x,y,z: half step)
 		fsx_1 = -func(V_h) * V_h * h_Vx + B * w * (h_Vz * sin(pi) - h_Vy * cos(pi)); //for next step
 
-		fy_1 = 0; // need half step t, x, v(vµµ x,y,z: half step)
+		fy_1 = 0; // need half step t, x, v(vë„ x,y,z: half step)
 		fsy_1 = -func(V_h) * V_h * h_Vy + B * w * (h_Vx * cos(pi));
 
-		fz_1 = (h_Z * sin(theta)); // need half step t, x, v(vµµ x,y,z: half step)
+		fz_1 = (h_Z * sin(theta)); // need half step t, x, v(vë„ x,y,z: half step)
 		fsz_1 = -g - func(V_h) * V_h * h_Vz + B * w * (h_Vx * sin(pi));
 
-		//step2 (±×´ÙÀ½ k2ÀÇ Half stepÀ¸·Î Á¡Âï±â)
+		//step2 (ê·¸ë‹¤ìŒ k2ì˜ Half stepìœ¼ë¡œ ì ì°ê¸°)
 		hh_X = x[i] + delt / (2.0) * fx_1;
 		hh_Vx = v[i] + delt / (2.0) * fsx_1;
 		hh_Y = x[i] + delt / (2.0) * fy_1; //half step y 
-		//x[i]ÀÎ ÀÌÀ¯´Â ´Ù½Ã µ¹¾Æ¿Í¼­ ¿ø·¡ÀÇ Á¡¿¡¼­ Half stepÀÌ±â¶§¹®¿¡
+		//x[i]ì¸ ì´ìœ ëŠ” ë‹¤ì‹œ ëŒì•„ì™€ì„œ ì›ë˜ì˜ ì ì—ì„œ Half stepì´ê¸°ë•Œë¬¸ì—
 		hh_Vy = v[i] + delt / (2.0) * fsy_1; //half step vy
 		hh_Z = x[i] + delt / (2.0) * fz_1; //half step z
 		hh_Vz = v[i] + delt / (2.0) * fsz_1; //half step vz
 		
-		//Áß°£¿¡ V_hh¸¦ ±¸ÇØÁà¾ßÇÔ
+		//ì¤‘ê°„ì— V_hhë¥¼ êµ¬í•´ì¤˜ì•¼í•¨
 		V_hh = sqrt(pow(hh_Vx, 2) + pow(hh_Vy, 2) + pow(hh_Vz, 2));
 
 		fx_2 = (hh_X * cos(theta));
@@ -105,7 +105,7 @@ int main(void)
 		fz_2 = (hh_Z * sin(theta));
 		fsz_2 = -g - func(V_hh) * V_hh * hh_Vz + B * w * (hh_Vx * sin(pi));
 		
-		//step3 (K3ÀÇ Half stepÀ¸·Î Á¡Âï±â)
+		//step3 (K3ì˜ Half stepìœ¼ë¡œ ì ì°ê¸°)
 		hhh_X = x[i] + delt / (2.0) * fx_2;
 		hhh_Vx = v[i] + delt / (2.0) * fsx_2;
 		hhh_Y = x[i] + delt / (2.0) * fy_2; //half step y 
@@ -113,10 +113,10 @@ int main(void)
 		hhh_Z = x[i] + delt / (2.0) * fz_2; //half step z
 		hhh_Vz = v[i] + delt / (2.0) * fsz_2; //half step vz
 
-		//Áß°£¿¡ V_hhh¸¦ ±¸ÇØÁà¾ßÇÔ
+		//ì¤‘ê°„ì— V_hhhë¥¼ êµ¬í•´ì¤˜ì•¼í•¨
 		V_hhh = sqrt(pow(hhh_Vx, 2) + pow(hhh_Vy, 2) + pow(hhh_Vz, 2));
 
-		///k4±¸ÇÏ±â
+		///k4êµ¬í•˜ê¸°
 		fx_3 = (hhh_X * cos(theta));
 		fsx_3 = -func(V_hhh) * V_hhh * hhh_Vx + B * w * (hhh_Vz * sin(pi) - hhh_Vy * cos(pi));
 
@@ -126,7 +126,7 @@ int main(void)
 		fz_3 = (hhh_Z * sin(theta));
 		fsz_3 = -g - func(V_hhh) * V_hhh * hhh_Vz + B * w * (hhh_Vx * sin(pi));
 
-		//°¢ Á¡ x,y,z¿¡ ´ëÇØ¼­ À§Ä¡¿Í ¼Óµµ ±¸ÇØº¸±â
+		//ê° ì  x,y,zì— ëŒ€í•´ì„œ ìœ„ì¹˜ì™€ ì†ë„ êµ¬í•´ë³´ê¸°
 		x[i + 1] = x[i] + delt * ((1.0 / 6.0) * fx + (1.0 / 3.0) * fx_1 + (1.0 / 3.0) * fx_2 + (1.0 / 6.0) * fx_3);		   
 		vx[i + 1] = vx[i] + delt * ((1.0 / 6.0) * fsx + (1.0 / 3.0) * fsx_1 + (1.0 / 3.0) * fsx_2 + (1.0 / 6.0) * fsx_3);
 
